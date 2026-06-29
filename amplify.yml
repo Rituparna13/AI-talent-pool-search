@@ -1,0 +1,51 @@
+version: 1
+
+env:
+  variables:
+    NODE_ENV: production
+    NODE_OPTIONS: --max_old_space_size=3096
+
+phases:
+  preBuild:
+    commands:
+      - echo "Pre-build phase"
+      - npm install -g pnpm
+      - pnpm install
+  build:
+    commands:
+      - echo "Building Next.js application"
+      - pnpm build
+  postBuild:
+    commands:
+      - echo "Post-build phase"
+
+artifacts:
+  baseDirectory: .next
+  files:
+    - '**/*'
+
+cache:
+  paths:
+    - node_modules/**/*
+    - .next/cache/**/*
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Installing frontend dependencies"
+    build:
+      commands:
+        - echo "Next.js handles frontend build"
+    postBuild:
+      commands:
+        - echo "Frontend build complete"
+  artifacts:
+    baseDirectory: .next/static
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+
+appRoot: /
