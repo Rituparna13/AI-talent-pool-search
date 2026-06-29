@@ -5,7 +5,8 @@ frontend:
     preBuild:
       commands:
         - npm install -g pnpm
-        - pnpm install
+        - pnpm install --no-frozen-lockfile
+
     build:
       commands:
         - pnpm build
